@@ -276,5 +276,6 @@ To make the issues visible within the ReaR User Guide we need to start the conta
 
 ## References
 
-[Disaster Recovery for our own ReaR upstream project](https://github.com/rear/rear/issues/3007)
-[github-workflow-backup-issues-as-a-markdown-file-in-your-repo](https://github.com/mattduck/gh2md#github-workflow-backup-issues-as-a-markdown-file-in-your-repo)
+* [Disaster Recovery for our own ReaR upstream project](https://github.com/rear/rear/issues/3007)
+
+* [github-workflow-backup-issues-as-a-markdown-file-in-your-repo](https://github.com/mattduck/gh2md#github-workflow-backup-issues-as-a-markdown-file-in-your-repo)
