@@ -16,7 +16,7 @@
 
 FROM ubuntu:20.04
 ARG local_user=gdha
-ARG local_id=1002
+ARG local_id=1000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get update \
