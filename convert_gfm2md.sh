@@ -1,3 +1,6 @@
+#!/bin/bash
+
+[[ -d issues ]] || exit 1
 find issues/ -type f | while read f
 do
   b="${f%.*}"

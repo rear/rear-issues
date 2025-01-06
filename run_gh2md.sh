@@ -1,5 +1,9 @@
+#!/bin/bash
+
+[[ ! -d docs ]] || exit 1
+
 # ReaR-User-Guide docs reside under the docs/ directory
-cd  docs
+cd docs
 
 [[ -d issues.old ]] && rm -rf issues.old
 [[ -d issues ]] && mv issues issues.old
@@ -27,7 +31,7 @@ rm -f index.md
 echo -e "# Issues History of Relax-and-Recover (ReaR)\n" > index.md
 
 # create a new index file
-for f in $(ls *.md)
+for f in $(ls *.md 2>/dev/null)
 do
   part1="$(head -1 $f | cut -d'(' -f 1)"
   part2="$(head -1 $f | cut -d')' -f 2)"
