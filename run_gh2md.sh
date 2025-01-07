@@ -3,7 +3,7 @@
 [[ ! -d docs ]] || exit 1
 
 # ReaR-User-Guide docs reside under the docs/ directory
-cd docs
+cd docs || exit 1
 
 [[ -d issues.old ]] && rm -rf issues.old
 [[ -d issues ]] && mv issues issues.old
@@ -23,7 +23,7 @@ done
 # as not all issues are dumped by a gh2md run
 [[ -d issues.old ]] && cp issues.old/*.md issues/
 
-cd issues
+cd issues || exit 1
 # remove the old index file
 rm -f index.md
 
@@ -33,8 +33,8 @@ echo -e "# Issues History of Relax-and-Recover (ReaR)\n" > index.md
 # create a new index file
 for f in $(ls *.md 2>/dev/null)
 do
-  part1="$(head -1 $f | cut -d'(' -f 1)"
-  part2="$(head -1 $f | cut -d')' -f 2)"
+  part1="$(head -1 "$f" | cut -d'(' -f 1)"
+  part2="$(head -1 "$f" | cut -d')' -f 2)"
   echo "- ${part1}($f)${part2}" >> index.md
 done
 
