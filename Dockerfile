@@ -14,7 +14,7 @@
 # docker start -i gh2md
 
 
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 ARG local_user=gdha
 ARG local_id=1000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
