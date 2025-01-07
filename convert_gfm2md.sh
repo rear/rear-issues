@@ -9,12 +9,12 @@ do
    rm -f "$b.gfm"
 done
 
-cd issues
+cd issues || exit 1
 rm -f index.md
 for f in $(ls *.md)
 do
-  part1="$(head -1 $f | cut -d'(' -f 1)"
-  part2="$(head -1 $f | cut -d')' -f 2)"
+  part1="$(head -1 "$f" | cut -d'(' -f 1)"
+  part2="$(head -1 "$f" | cut -d')' -f 2)"
   echo "${part1}($f)${part2}" >> index.md
 done
 
