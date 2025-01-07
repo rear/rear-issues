@@ -1,10 +1,14 @@
 # Relax-and-Recover (ReaR) Issues Collection Generator
 
-This project aims at dumping all open and closed issues (and pull requests) from GitHub ReaR project in markdown files. 
+This project aims at dumping all open and closed issues (and pull requests) from
+GitHub ReaR project in markdown files. 
 
-We used the [gh2md](https://github.com/mattduck/gh2md) tool created by [Matt Duck](https://github.com/mattduck) to generate individual MarkDown pages of each issue and pull request (open or closed).
+We used the [gh2md](https://github.com/mattduck/gh2md) tool created by 
+[Matt Duck](https://github.com/mattduck) to generate individual MarkDown pages 
+of each issue and pull request (open or closed).
 
-We packed this tool in a docker image generated via our [Dockerfile](https://github.com/rear/rear-issues/blob/main/Dockerfile) as
+We packed this tool in a docker image generated via our 
+[Dockerfile](https://github.com/rear/rear-issues/blob/main/Dockerfile) as
 
 ```bash
 docker build -t gh2md .

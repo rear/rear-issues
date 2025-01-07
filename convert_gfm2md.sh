@@ -1,7 +1,7 @@
 #!/bin/bash
 
 [[ -d issues ]] || exit 1
-find issues/ -type f | while read f
+find issues/ -type f | while read -r f
 do
   b="${f%.*}"
   #mv -v "$b.md" "$b.gfm"
@@ -17,4 +17,3 @@ do
   part2="$(head -1 "$f" | cut -d')' -f 2)"
   echo "${part1}($f)${part2}" >> index.md
 done
-
