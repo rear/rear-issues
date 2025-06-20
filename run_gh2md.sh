@@ -1,6 +1,14 @@
 #!/bin/bash
 
-[[ ! -d docs ]] || exit 1
+echo "installing gh2md with pipx"
+pipx install gh2md
+
+export PATH=$PATH:$HOME/.local/bin:/home/ubuntu/.local/bin
+
+if [[ ! -d docs ]] ; then
+	echo "ERROR: Directory $PWD does not have a 'docs' directory"
+       	exit 1
+fi
 
 # ReaR-User-Guide docs reside under the docs/ directory
 cd docs || exit 1
@@ -34,6 +42,11 @@ echo -e "# Issues History of Relax-and-Recover (ReaR)\n" > index.md
 for f in $(ls *.md 2>/dev/null)
 do
   part1="$(head -1 "$f" | cut -d'(' -f 1)"
+  echo "$part1" | grep -q ^\#
+  if [[ $? -eq 0 ]] ; then
+     # remove the '#' to avoid capital lines in the index file
+     part1="$(echo "$part1" | cut -d'#' -f 2-)"
+  fi
   part2="$(head -1 "$f" | cut -d')' -f 2)"
   echo "- ${part1}($f)${part2}" >> index.md
 done

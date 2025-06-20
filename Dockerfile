@@ -9,7 +9,7 @@
 # The first time run of the 'gh2md' container:
 # docker run -it -v $HOME/projects/rear/rear-user-guide:$HOME/web \
 #                -v $HOME/.gitconfig:$HOME/.gitconfig -v $HOME/.ssh:$HOME/.ssh \
-#                -v $HOME/.gnupg:$HOME/.gnupg -v $HOME/.github-token:$HOME/.github-token --net=host gh2md
+#                -v $HOME/.gnupg:$HOME/.gnupg -v $HOME/.github-token:/home/ubuntu/.github-token --net=host gh2md
 # Afterwards we can just start the container as:
 # docker start -i gh2md
 
@@ -22,7 +22,9 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     python3 \
-    python3-distutils \
+    python3-setuptools \
+    python3-pip \
+    pipx \
     bash \
     make \
     gcc \
@@ -38,19 +40,17 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# install pip and mkdocs + extras; remove gcc afterwards again
-RUN curl -o /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py \ 
-    && python3 /tmp/get-pip.py \
-    && pip install --upgrade pip \
-    && pip install gh2md \
-    && apt autoremove \
+# install gh2md ; remove gcc afterwards again
+#RUN pipx install gh2md \
+RUN apt autoremove \
     && apt-get -y remove gcc
 
 COPY convert_gfm2md.sh /usr/bin/convert_gfm2md.sh
 COPY run_gh2md.sh /usr/bin/run_gh2md.sh
 
 RUN echo "Setting home directory for local user ${local_user}" \
-    && useradd -u ${local_id} ${local_user} \
+    && usermod -l ${local_user}  ubuntu \
+    && groupmod  --new-name ${local_user} ubuntu \
     && mkdir -p /home/${local_user}/web/ \
     && chown -R ${local_user}:${local_user} /home/${local_user}/web
 
