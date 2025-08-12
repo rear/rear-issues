@@ -46,8 +46,7 @@ jobs:
           # You can also omit the token and run the tools that support default configurations
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           patterns: |
-            **/Dockerfile
-            **/*.sh
+            gh-code-scanning-compat
           verbose: true
           output: results.sarif
           format: sarif
