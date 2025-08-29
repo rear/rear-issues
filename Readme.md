@@ -278,6 +278,8 @@ $
 
 To make the issues visible within the ReaR User Guide we need to start the container from the [Relax-and-Recover User Guide](https://github.com/rear/rear-user-guide) and check the results with `mkdocs serve` before performing a git commit/push.
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/56fa5bdc5640402cbdc38275595fa0b9)](https://app.codacy.com/gh/rear/rear-issues/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 ## References
 
 * [Disaster Recovery for our own ReaR upstream project](https://github.com/rear/rear/issues/3007)
