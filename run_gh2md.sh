@@ -39,7 +39,7 @@ rm -f index.md
 echo -e "# Issues History of Relax-and-Recover (ReaR)\n" > index.md
 
 # create a new index file
-for f in $(ls *.md 2>/dev/null)
+for f in $(ls ./*.md 2>/dev/null)
 do
   part1="$(head -1 "$f" | cut -d'(' -f 1)"
   echo "$part1" | grep -q ^\#
