@@ -27,7 +27,7 @@ However, to start we must add some important parameters:
 ```bash
 docker run -it -v $HOME/projects/rear/rear-user-guide:$HOME/web \
                -v $HOME/.gitconfig:$HOME/.gitconfig -v $HOME/.ssh:$HOME/.ssh \
-               -v $HOME/.gnupg:$HOME/.gnupg -v $HOME/.github-token:$HOME/.github-token --net=host gh2md
+               -v $HOME/.gnupg:$HOME/.gnupg -v $HOME/.github-token:/home/ubuntu/.github-token --net=host gh2md
 ```
 
 The issues will be generated in directory `$HOME/projects/rear/rear-user-guide/docs/issues`, which is from the [ReaR User Guide](https://github.com/rear/rear-user-guide). When the container is done with dumping the issues it will exit the container and that's it.
