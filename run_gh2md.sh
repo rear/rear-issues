@@ -16,9 +16,44 @@ cd docs || exit 1
 [[ -d issues.old ]] && rm -rf issues.old
 [[ -d issues ]] && mv issues issues.old
 
+copy_old_issues() {
+  if compgen -G "issues.old/*.md" > /dev/null ; then
+    cp issues.old/*.md issues/
+  else
+    echo "WARN: issues.old does not contain markdown files to copy"
+  fi
+}
+
 
 # run gh2md which will create a fresh issues directory with content
-gh2md --multiple-files --idempotent --file-extension .gfm rear/rear issues
+max_attempts="${GH2MD_MAX_ATTEMPTS:-5}"
+retry_delay_seconds="${GH2MD_RETRY_DELAY_SECONDS:-15}"
+gh2md_succeeded=0
+
+for ((attempt=1; attempt<=max_attempts; attempt++))
+do
+  rm -rf issues
+  if gh2md --multiple-files --idempotent --file-extension .gfm rear/rear issues ; then
+    gh2md_succeeded=1
+    break
+  fi
+
+  if [[ $attempt -lt $max_attempts ]] ; then
+    echo "WARN: gh2md attempt ${attempt}/${max_attempts} failed - retrying in ${retry_delay_seconds}s"
+    sleep "$retry_delay_seconds"
+  fi
+done
+
+if [[ $gh2md_succeeded -eq 0 ]] ; then
+  if [[ -d issues.old ]] ; then
+    echo "WARN: gh2md failed after ${max_attempts} attempts - using existing issues from issues.old"
+    mkdir -p issues
+    copy_old_issues
+  else
+    echo "ERROR: gh2md failed after ${max_attempts} attempts and no issues.old fallback exists"
+    exit 1
+  fi
+fi
 
 find issues/ -type f | while read f
 do
@@ -29,7 +64,7 @@ done
 
 # To have all issues we copy the content of issues.old in issues/ as well
 # as not all issues are dumped by a gh2md run
-[[ -d issues.old ]] && cp issues.old/*.md issues/
+[[ -d issues.old ]] && copy_old_issues
 
 cd issues || exit 1
 # remove the old index file
@@ -50,4 +85,3 @@ do
   part2="$(head -1 "$f" | cut -d')' -f 2)"
   echo "- ${part1}($f)${part2}" >> index.md
 done
-
